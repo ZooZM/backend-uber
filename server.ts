@@ -5,7 +5,9 @@ import app from './app';
 import { Server } from 'socket.io';
 import { initIO, initSocket } from './socket/socketHandler';
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const port = process.env.PORT || 5000;
 
