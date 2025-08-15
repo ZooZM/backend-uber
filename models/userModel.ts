@@ -6,9 +6,9 @@ interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  role: "user" | "captain";
+  role: "user" | "driver";
   online: boolean;
-  socketId?: String;
+  socketId?: string;
   profileImage: string;
   isVerified: boolean;
   vehicleType?: "car" | "motorbike" | "bicycle";
@@ -27,27 +27,30 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6, select: false },
     online: { type: Boolean, required: [true, "online is Req"] },
-    socketId: { type: String },
-    role: { type: String, enum: ["user", "captain"], default: "user" },
+    socketId: { type: String,default:null },
+    role: { type: String, enum: ["user", "driver"], default: "user" },
     profileImage: { type: String },
     isVerified: { type: Boolean, default: false },
     vehicleType: { type: String, enum: ["car", "motorbike", "bicycle"] },
     licenseNumber: { type: String },
     nationalId: { type: String },
     location: {
-      coordinates: {
-        type: {
-          type: String,
-          enum: ["Point"],
-          default: "Point",
-        },
-        coordinates: [Number],
-      },
-    },
+  type: {
+    type: String,
+    enum: ["Point"],
+    default: "Point",
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  }
+},
+
   },
   { timestamps: true }
 );
-
+userSchema.index({ location: "2dsphere" });
 userSchema.methods.correctPassword = async function (
   candidatePassword: string,
   userPassword: string
@@ -58,7 +61,7 @@ userSchema.methods.correctPassword = async function (
 userSchema.methods.distance = async function (coordinates: {
   type: string;
   coordinates: [number, number];
-}): Promise<number> {
+}): Promise<String> {
   const [lon1, lat1] = this.location.coordinates;
   const [lon2, lat2] = coordinates.coordinates;
 
@@ -79,7 +82,7 @@ userSchema.methods.distance = async function (coordinates: {
 
   const distance = R * c;
 
-  return distance;
+  return distance.toString();
 };
 const User = model<IUser>("User", userSchema);
 

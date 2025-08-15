@@ -48,7 +48,7 @@ export const login = catchAsync(
 );
 
 export const signup = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password, role, vehicleType, photo } = req.body;
+  const { name, email, password, role, vehicleType, photo,online,location } = req.body;
  const existingUser = await User.findOne({ email });
   if (existingUser) {
     return next(new AppError("Email already in use", 400, "EMAIL_IN_USE"));
@@ -72,6 +72,8 @@ export const signup = catchAsync(async (req: Request, res: Response, next: NextF
     role,
     vehicleType: role === 'captain' ? vehicleType : undefined,
     photo,
+    online,
+    location
   });
 
 const token = signToken(newUser._id.toString());

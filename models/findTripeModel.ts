@@ -23,7 +23,7 @@ interface IFindTripe extends Document {
  const findTripSchema = new Schema<IFindTripe>({
   price: { type: Number, required: true },
   tripe: {
-    distance: { type: Number, required: [true] },
+    distance: { type: String, required: [true] },
     time: { type: String, required: [true] },
     pickUpPoint: {
       point: {

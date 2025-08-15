@@ -11,6 +11,6 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "driver-socket-test.jss"],
   "exclude": ["node_modules", "dist"]
 }
