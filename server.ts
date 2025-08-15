@@ -6,7 +6,7 @@ import { Server } from 'socket.io';
 import { initIO, initSocket } from './socket/socketHandler';
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  dotenv.config();
+  // dotenv.config();
 }
 console.log("All env vars:", process.env);
 
