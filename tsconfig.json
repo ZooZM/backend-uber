@@ -7,8 +7,9 @@
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+ "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0",
+        "resolveJsonModule": true,
     "skipLibCheck": true
   },
   "include": ["**/*.ts", "driver-socket-test.jss"],
